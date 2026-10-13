@@ -1,0 +1,130 @@
+import type { TextStyle } from '../types';
+export const baseStyle: TextStyle = {
+  fill: '#ffffff',
+  stroke: '#111827',
+  strokeWidth: 2,
+  outerStroke: '#ffffff',
+  outerWidth: 0,
+  shadowColor: '#020617',
+  shadowAngle: 90,
+  shadowDistance: 3,
+  shadowBlur: 2,
+  glow: 0,
+  gradient: '',
+  effect: 'normal',
+  letterSpacing: 1,
+  lineHeight: 1.1,
+  italic: false,
+};
+const make = (id: string, name: string, style: Partial<TextStyle>) => {
+  const merged = { ...baseStyle, ...style };
+  for (const key of ['fill', 'stroke', 'outerStroke', 'shadowColor', 'gradient'] as const)
+    merged[key] = merged[key].replace(/^#([a-f0-9])([a-f0-9])([a-f0-9])$/i, '#$1$1$2$2$3$3');
+  return { id, name, style: merged };
+};
+export const effects = [
+  make('white', '白文字・黒フチ', {}),
+  make('blackgold', '黒文字・金フチ', { fill: '#151515', stroke: '#e9b75c', strokeWidth: 3 }),
+  make('gold', 'メタルゴールド', {
+    fill: '#fff4bb',
+    gradient: '#ad6e16',
+    stroke: '#51360b',
+    effect: 'metal',
+  }),
+  make('silver', 'メタリックシルバー', {
+    fill: '#fff',
+    gradient: '#63798c',
+    stroke: '#1c334a',
+    effect: 'metal',
+  }),
+  make('pink', 'ピンクネオン', {
+    fill: '#fff0fe',
+    stroke: '#ef54bc',
+    shadowColor: '#ff30bd',
+    shadowBlur: 14,
+    glow: 12,
+    shadowDistance: 0,
+  }),
+  make('blue', 'ブルーネオン', {
+    fill: '#effcff',
+    stroke: '#32d7ff',
+    shadowColor: '#23c5ff',
+    shadowBlur: 12,
+    glow: 10,
+    shadowDistance: 0,
+  }),
+  make('fire', '炎', {
+    fill: '#fff6a4',
+    gradient: '#ff5a29',
+    stroke: '#ae1919',
+    shadowColor: '#f45119',
+    glow: 7,
+  }),
+  make('gradient', 'グラデーション', { fill: '#fa9dd0', gradient: '#61e2ef', stroke: '#341849' }),
+  make('3d', '立体文字', {
+    fill: '#f1feff',
+    stroke: '#204878',
+    shadowColor: '#183251',
+    effect: 'extrude',
+    shadowDistance: 6,
+  }),
+  make('long', 'ロングシャドウ', {
+    fill: '#fff',
+    strokeWidth: 0,
+    effect: 'long',
+    shadowColor: '#142f4a',
+    shadowAngle: 45,
+    shadowDistance: 14,
+  }),
+  make('double', 'ダブルアウトライン', {
+    fill: '#fff',
+    stroke: '#1e4c6c',
+    strokeWidth: 3,
+    outerStroke: '#56dcdd',
+    outerWidth: 3,
+  }),
+  make('glow', 'グロー', {
+    fill: '#fff',
+    strokeWidth: 0,
+    shadowColor: '#ffe085',
+    shadowDistance: 0,
+    glow: 12,
+  }),
+  make('emboss', '浮き出し', {
+    fill: '#fce4a4',
+    stroke: '#8d6d32',
+    effect: 'emboss',
+    shadowDistance: 2,
+  }),
+  make('brush', '筆の力強さ', {
+    fill: '#111827',
+    stroke: '#fff2d2',
+    strokeWidth: 1,
+    letterSpacing: 4,
+    shadowDistance: 0,
+  }),
+  make('pop', 'ポップな多重フチ', {
+    fill: '#fff47d',
+    stroke: '#df3f88',
+    strokeWidth: 3,
+    outerStroke: '#fff',
+    outerWidth: 3,
+    shadowColor: '#562158',
+    shadowDistance: 5,
+  }),
+  make('triple', '黒白フチ・影', {
+    fill: '#fff',
+    stroke: '#151820',
+    strokeWidth: 3,
+    outerStroke: '#fff',
+    outerWidth: 2,
+    shadowDistance: 5,
+  }),
+  make('speed', 'スピード', {
+    fill: '#fff',
+    stroke: '#083a52',
+    italic: true,
+    letterSpacing: 3,
+    shadowDistance: 4,
+  }),
+];

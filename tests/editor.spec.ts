@@ -182,13 +182,12 @@ test('モバイルの素材・設定・ダウンロード', async ({ page }) => 
   await page.goto('/');
   await expect(page.getByText('書き出し準備完了')).toBeVisible();
   await page.screenshot({ path: 'verification/mobile.png', fullPage: true });
-  await page.getByRole('button', { name: '素材', exact: true }).click();
+  await page.getByRole('button', { name: 'デザイン', exact: true }).click();
   await page.getByRole('button', { name: 'テンプレート スイートエール' }).click();
-  await page.getByRole('button', { name: '素材パネルを閉じる' }).click();
-  await page.getByRole('button', { name: '設定', exact: true }).click();
-  await page.getByRole('textbox', { name: '選手名', exact: true }).fill('松田真実');
-  await page.getByRole('button', { name: '設定パネルを閉じる' }).click();
-  await page.getByRole('button', { name: '出力', exact: true }).click();
+  await page.getByRole('button', { name: '文字', exact: true }).click();
+  await page.getByRole('button', { name: '選手名 松田真実', exact: true }).click();
+  await page.getByRole('textbox', { name: '選択文字の内容', exact: true }).fill('松田真実');
+  await page.getByRole('button', { name: 'ダウンロード', exact: true }).click();
   await expect(page.getByRole('dialog', { name: '横断幕を書き出す' })).toBeVisible();
   await page.getByRole('checkbox', { name: '選手情報と確認事項を確認しました' }).check();
   await expect(page.getByRole('button', { name: '画像をダウンロード', exact: true })).toBeEnabled();

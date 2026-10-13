@@ -210,6 +210,9 @@ export function BannerScene({
   guides,
   revision,
   onEdit,
+  touch = false,
+  pan = false,
+  onSelect,
 }: {
   project: Project;
   zoom: number;
@@ -217,6 +220,9 @@ export function BannerScene({
   guides: boolean;
   revision: number;
   onEdit: (l: TextLayer) => void;
+  touch?: boolean;
+  pan?: boolean;
+  onSelect?: () => void;
 }) {
   const bgsrc = useMemo(() => svgUrl(backgroundSvg(project.background)), [project.background]),
     bg = useImage(bgsrc),
@@ -252,6 +258,7 @@ export function BannerScene({
           : [...new Set([...selection, ...ids])]
         : ids,
     );
+    onSelect?.();
   };
   const bgState = project.background;
   return (
@@ -261,6 +268,8 @@ export function BannerScene({
       scaleX={zoom}
       scaleY={zoom}
       ref={stageRef}
+      listening={!pan}
+      preventDefault={!pan}
       onMouseDown={(e) => {
         if (e.target === e.target.getStage()) selectIds([]);
       }}
@@ -341,7 +350,12 @@ export function BannerScene({
           borderStroke="#39dcd0"
           anchorStroke="#39dcd0"
           anchorFill="#132529"
-          anchorSize={9}
+          anchorSize={touch ? 22 : 9}
+          anchorCornerRadius={touch ? 11 : 0}
+          rotateAnchorOffset={touch ? 28 : 50}
+          enabledAnchors={
+            touch ? ['top-left', 'top-right', 'bottom-left', 'bottom-right'] : undefined
+          }
           padding={3}
           boundBoxFunc={(old, b) => (Math.abs(b.width) < 10 || Math.abs(b.height) < 10 ? old : b)}
         />
